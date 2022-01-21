@@ -1,30 +1,16 @@
 
 
 from requests_html import HTMLSession
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-import time
 import constants
 
-options = Options()
-options.headless = True
-url = constants.url
+URL = constants.url
+session = None
 
 
 def get_profile_slugs():
-    # driver = webdriver.Chrome(
-    #     options=options, executable_path=constants.DRIVER_PATH)
-    # driver = webdriver.PhantomJS()
-    # driver.get(url+"/profile?personality=9")
-    # html = driver.page_source
 
-    # time.sleep(2)
-    # html = driver.execute_script('return document.documentElement.outerHTML')
-    # driver.quit()
-
-    session = HTMLSession()
-    resp = session.get(url+"/profile?personality=9")
+    resp = session.get(URL+"/profile?personality=9")
     resp.html.render(sleep=2)
     html = resp.html.html
 
@@ -41,16 +27,9 @@ def get_profile_slugs():
 
 
 def get_profile_details():
-    # driver = webdriver.Chrome(
-    #     options=options, executable_path=constants.DRIVER_PATH)
-    # driver.get(url+"/profile/808/")
-    # time.sleep(2)
-    # html = driver.execute_script('return document.documentElement.outerHTML')
-    # driver.quit()
-
     session = HTMLSession()
-    resp = session.get(url+"/profile/808/")
-    resp.html.render(sleep=2)
+    resp = session.get(URL+"/profile/808/")
+    resp.html.render()
     html = resp.html.html
 
     soup = BeautifulSoup(html, 'lxml')
@@ -168,5 +147,16 @@ def score_profile():
     print(score)
 
 
-get_profile_slugs()
-score_profile()
+if __name__ == "__main__":
+
+    session = HTMLSession()
+
+    # define all relevant/known personality types
+    # search pdb - mbti, enneagram, big5
+    # grab all slugs
+    # maintain maxheap
+    # score each slug
+
+    get_profile_slugs()
+    get_profile_details()
+    score_profile()

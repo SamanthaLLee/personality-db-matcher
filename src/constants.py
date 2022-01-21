@@ -1,4 +1,3 @@
-DRIVER_PATH = '/Users/samlee/chromedriver'
 url = 'https://www.personality-database.com'
 weights_map = dict()
 
